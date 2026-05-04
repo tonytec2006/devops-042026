@@ -1,0 +1,17 @@
+---
+- hosts: db
+  become: yes
+  tasks:
+    - name: 'Instalação de Pacotes BD'
+      apt:
+        pkg:
+          - mariadb-server
+          - wget
+          - zip
+          - curl
+          - vim
+          - python3-mysqldb
+        state: present
+        update_cache: yes
+      tags:
+        - install
