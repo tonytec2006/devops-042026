@@ -16,14 +16,18 @@ config.vm.define "controle" do |controle|
 	al.playbook = "installdocker.yml"
 	al.install_mode = "apt"
   end
+  controle.vm.provision "ansible_local" do |al|
+    al.playbook = "installjenkins.yml"
+	al.install_mode = "apt"
+  end
   controle.vm.provider "virtualbox" do |vb|
     vb.name = "controle"
-    vb.memory = "2048"
+    vb.memory = "6000"
     vb.cpus = 2
   end
 end
- 
-config.vm.define "web" do |web|
+
+ config.vm.define "web" do |web|
   web.vm.box = "shekeriev/debian-12"
   web.vm.network "private_network", ip: "172.17.177.101"
   web.vm.hostname = "web"
