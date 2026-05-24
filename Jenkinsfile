@@ -25,19 +25,18 @@ pipeline {
 
         stage('Build Images') {
             steps {
-                slackSend channel: '#ci-devopstonytec', message: "Build das imagens iniciado", tokenCredentialId: 'slack-token'
-
                 script {
-                    docker.withRegistry("https://${REGISTRY}", 'dockerhub') {
-                        docker.build(IMAGE_WEB,   "-f Dockerfileweb .").push()
-                        docker.build(IMAGE_DB,    "-f Dockerfiledb .").push()
-                        docker.build(IMAGE_NGINX, "-f Dockerfilenginx .").push()
+                    // Alterado para apontar para o novo ID 'dockerhub-token'
+                    withDockerRegistry([credentialsId: 'dockerhub-token', url: 'https://index.docker.io/v1/']) {
+                
+                         // Seus comandos de docker build e docker push entram aqui
+                
                     }
                 }
             }
         }
 
-        stage('Security Scan (Trivy)') {
+       stage('Security Scan (Trivy)') {
             steps {
                 slackSend channel: '#ci-devopstonytec', message: "Rodando Trivy Scan...", tokenCredentialId: 'slack-token'
 
