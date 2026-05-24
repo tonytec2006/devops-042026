@@ -92,3 +92,6 @@ pipeline {
         }
     }
 }
+:%s/devops/ci-devops/g
+
+
